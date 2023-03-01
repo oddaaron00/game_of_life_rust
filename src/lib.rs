@@ -200,10 +200,12 @@ impl Grid {
 
     /// Returns the cell at the corresponding coordinates or `None` if the coordinates point outside the grid.
     fn get_cell(&self, x: i16, y: i16) -> Option<&Cell> {
-        if x < 0 || x >= self.width as i16 || y < 0 || y >= self.height as i16 {
+        let width = self.width as i16;
+        let height = self.height as i16;
+        if x < 0 || x >= width || y < 0 || y >= height {
             None
         } else {
-            Some(&self.grid[(y * self.width as i16 + x) as usize])
+            Some(&self.grid[(y * width + x) as usize])
         }
     }
 
@@ -217,8 +219,8 @@ impl Grid {
 
             let mut neighbours = Vec::new();
 
-            for i in vec![x - 1, x, x + 1] {
-                for j in vec![y - 1, y, y + 1] {
+            for &i in &[x - 1, x, x + 1] {
+                for &j in &[y - 1, y, y + 1] {
                     if i == x && j == y {
                         continue;
                     }
